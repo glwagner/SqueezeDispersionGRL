@@ -1,0 +1,17 @@
+name = "SqueezeDispersion"
+uuid = "b60af848-b6c1-11e8-3789-85de93651b40"
+authors = ["Gregory Wagner <wagner.greg@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
+FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+FourierFlows = "2aec4490-903f-5c70-9b11-9bed06a700e1"
+JLD2 = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
+PassiveTracerFlows = "4daca97c-b6ab-11e8-166d-ff56bdb6ebb2"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
+PyPlotPlus = "5c289bae-b820-11e8-3dc3-cf50833a5df7"
