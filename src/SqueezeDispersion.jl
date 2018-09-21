@@ -15,4 +15,7 @@ include("manuscripttools.jl")
 export squeezediffusivity, wavychannelmask, getkappa, getgrid, getgridspacing, getgrid, getxy,  calcenhancement
 include("analysis.jl")
 
+# Samoan module
+include("samoan.jl")
+
 end # module
