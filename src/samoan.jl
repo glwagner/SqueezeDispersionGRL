@@ -1,17 +1,51 @@
 module Samoan
 
-using MAT, PyPlot, Interpolations, Missings, Printf #, DataArrays
+export 
+  cleantempdata, 
+  cleansigmadata, 
+  getsact,  
+  getkappa, 
+  nan2na!, 
+  data2array, 
+  getsgth,
+  simulsort!, 
+  pressenter, 
+  nan2missing, 
+  nanoverturns, 
+  bindata, 
+  binkappa, 
+  closestctd,
 
-export cleantempdata, cleansigmadata, getsact, getkappa, nan2na!, data2array, getsgth
-export simulsort!, pressenter, nan2missing, nanoverturns, @rmnans!, bindata
-export @initarrays, @makeflat, @nan2missing, binkappa, closestctd
+  @rmnans!, 
+  @initarrays, 
+  @makeflat, 
+  @nan2missing,
+  
+  latlondist, 
+  sigma4, 
+  unpackctddata, 
+  nanextremes!, 
+  smoothoverturns!, 
+  unpacksection9,
+  vmplayeranalysis, 
+  effectivekappa,
 
-export latlondist, sigma4, unpackctddata, nanextremes!, smoothoverturns!, unpacksection9,
-       vmplayeranalysis, effectivekappa
+  nanmean, 
+  nanmaximum, 
+  nanminimum,
 
-export nanmean, nanmaximum, nanminimum
+  ABSMAXSIGMA, 
+  ABSMINSIGMA, 
+  ABSMAXTEMP, 
+  ABSMINTEMP
 
-export ABSMAXSIGMA, ABSMINSIGMA, ABSMAXTEMP, ABSMINTEMP
+using 
+  Statistics,
+  MAT, 
+  PyPlot, 
+  Interpolations, 
+  Missings, 
+  Printf
 
 const ABSMAXSIGMA = 100.0
 const ABSMINSIGMA = 10.0
@@ -26,9 +60,9 @@ function bindata(xedges, x, d)
   if size(x) != size(d)
     throw("The size of the coordinates and data must be the same.")
   elseif maximum(d) < minimum(xedges) || minimum(d) > maximum(xedges)
-    warn("There is no data in the range spanned by bins.")
+    @warn "There is no data in the range spanned by bins."
   elseif minimum(d) < minimum(xedges) || maximum(d) > maximum(xedges)
-    warn("Data exists outside the range spanned by the bins.")
+    @warn "Data exists outside the range spanned by the bins."
   end
 
   # bins and edges geometery:
@@ -58,14 +92,14 @@ end
 
 "Take the maximum of data while ignoring NaNs. "
 nanmaximum(x) = maximum(filter(!isnan, x))
-nanmaximum(x, y) = mapslices(nanmaximum, x, y)
+nanmaximum(x, y) = mapslices(nanmaximum, x, dims=y)
 
 "Take the minimum of data while ignoring NaNs. "
 nanminimum(x) = minimum(filter(!isnan, x))
-nanminimum(x, y) = mapslices(nanminimum, x, y)
+nanminimum(x, y) = mapslices(nanminimum, x, dims=y)
 
 nanmean(x) = mean(filter(!isnan, x))
-nanmean(x, y) = mapslices(nanmean, x, y)
+nanmean(x, y) = mapslices(nanmean, x, dims=y)
 
 "Calculate the distance between two points at (lat1, lon1) and (lat2, lon2)."
 function latlondist(lat1, lon1, lat2, lon2)
@@ -123,7 +157,8 @@ function vmplayeranalysis(vmp, sigmaedges)
     
     smoothoverturns!(goodsigma)
     interpsigma = interpolate((goodsigma,), gooddepth, Gridded(Linear()))
-    edgedepths = interpsigma[sigmaedges]
+    extrapsigma = extrapolate(interpsigma, NaN)
+    edgedepths = extrapsigma(sigmaedges)
     thickness[:, i] = edgedepths[2:end] - edgedepths[1:end-1]
     
     layersamples[:, i], layerkappa[:, i] = bindata(sigmaedges, goodsigma, goodkappa)
@@ -208,7 +243,8 @@ function getprofilessigma!(profiles, ctdlon, ctdlat, ctdsig)
     cleandepth = ctddepth[.!closestsig.na]
 
     sigitp = interpolate((cleandepth,), cleansig, Gridded(Linear()))
-    profsig = sigitp[depth]
+    sigexp = extrapolate(sigitp, NaN)
+    profsig = sigexp(depth)
 
     profile["sigma"] = profsig
   end
@@ -443,6 +479,5 @@ function unpackctddata(ctddata)
 end
 
 =#
-
 
 end # module
