@@ -4,6 +4,7 @@ authors = ["Gregory Wagner <wagner.greg@gmail.com>"]
 version = "0.1.0"
 
 [deps]
+DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 FourierFlows = "2aec4490-903f-5c70-9b11-9bed06a700e1"
@@ -19,3 +20,4 @@ Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
 PyPlotPlus = "5c289bae-b820-11e8-3dc3-cf50833a5df7"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
