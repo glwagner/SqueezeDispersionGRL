@@ -4,10 +4,15 @@ Pkg.activate("..")
 using SqueezeDispersion
 
 # Generate figure 2 data and plot the squeeze dispersion enhancement
-d, r, s = genfig2data()
-plotfig2enhancement(d, r, s)
+#   - runs numerical simulations for delta=0.1:0.1:0.8
+#   - saves both simulation results and also diffusivity enhancement
+#   - see src/manuscripttools.jl for function definition
+deltas, enhancements, setup = genfig2data() 
 
-# Run convergence tests for selected deltas (see Section 2 in the paper)
+# Plot the enhancement
+plotfig2enhancement(deltas, enhancements, setup)
+
+# Run convergence tests for selected deltas
 #= 
 for delta in [0.75, 0.8]
   for ny in [256, 512]
