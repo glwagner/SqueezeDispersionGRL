@@ -22,12 +22,17 @@ Jupyter notebooks to produce plots for the paper are provided in `notebooks/`.
 The notebook `example.ipynb` produces figure 2. The notebooks `samoanoverview.ipynb` and `samoanresults.ipynb`
 produce the top and bottom of figure 3. 
 
-## Author
+## Contributors
 
-The code in this repository was written by [Gregory L. Wagner](). The observational data was trimmed from a larger CTD
-and microstructure dataset provided by [Glenn S. Carter]() and [Gunnar Voet]().
+The code in this repository was written by [Gregory L. Wagner](). The Samoan Passage observational data 
+was trimmed from a larger CTD and microstructure dataset provided by [Glenn S. Carter]() and [Gunnar Voet]().
+The observational data was taken on a research cruise in 2012 with [Matthew H. Alford](), [James B. Girton](), 
+[Glenn S. Carter](), and [Gunnar Voet]().
 
-[JLD2]: https://www.github.com/JLD2.jl
+
+[JLD2]: https://github.com/JuliaIO/JLD2.jl
 [Gregory L. Wagner]: https://glwagner.github.io
-[Glenn S. Carter]:
-[Gunnar Voet]:
+[Glenn S. Carter]: https://www.soest.hawaii.edu/oceanography/faculty/carter.htm
+[Gunnar Voet]: http://scrippsscholars.ucsd.edu/gvoet
+[Matthew H. Alford]: http://www.mod.ucsd.edu/alford/
+[James B. Girton]: http://apl.uw.edu/people/profile.php?last_name=Girton&first_name=James
