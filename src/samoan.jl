@@ -4,8 +4,14 @@ export
   data2array, 
   cleantempdata, 
   cleansigmadata, 
+  simulsort, 
   simulsort!, 
+  dz,
   movingavg,
+  movingavg!,
+  coarsen,
+  hasoverturns,
+  getoverturns,
 
   sigma4, 
   latlondist, 
@@ -19,13 +25,15 @@ export
   nanmean, 
   nanmaximum, 
   nanminimum,
+  rmnans,
   @rmnans!, 
   @nan2missing,
   nan2missing, 
   nan2na!, 
   nanoverturns, 
   nanextremes!, 
-  
+
+  unpack_vmp_profile,
   unpackctddata, 
   unpacksection9,
   smoothoverturns!, 
@@ -106,6 +114,8 @@ function smoothoverturns!(sigma)
     sigma[i] = (sigma[i] < sigma[i-1]) ? sigma[i-1] : sigma[i]
   end
 end
+
+hasoverturns(ρ) = !issorted(ρ)
 
 function on_density_grid(u, ρ, ρ_grid)
   goodidx = .!isnan.(ρ)
@@ -188,6 +198,11 @@ function effectivekappa(κ, h; avgh=samoanavg(h))
   avgh .* samoanavg(flux)
 end
 
+function bfreq_sq(σ, z; ρ0=1033, g=9.81)
+  σz = dz(σ_avg, z)
+  -g/ρ0 * σz
+end
+
 function localkappa(σ, ε, z; ρ0=1033, dsmooth=20, g=9.81, Γ=0.2)
   σ_avg = movingavg(σ, dsmooth)
   ε_avg = movingavg(ε, dsmooth)
@@ -199,7 +214,51 @@ function localkappa(σ, ε, z; ρ0=1033, dsmooth=20, g=9.81, Γ=0.2)
   return Γ .* ε_avg ./ N² 
 end
 
+#=
+function dz(u, z)
+  uz = similar(u)
+
+  uz[1] = (u[2] - u[1]) / (z[2] - z[1])
+  for i = 2:length(u)-1
+    uz[i] = (u[i+1]-u[i-1]) / (z[i+1] - z[i-1])
+  end
+  uz[end] = (u[end] - u[end-1]) / (z[end] - z[end-1])
+
+  uz
+end
+=#
+
 function movingavg(u, d)
+  uavg = similar(u)
+  n = length(u)
+  d1 = floor(Int, d/2)
+  d2 = d - d1 # d = d1 + d2
+
+  for i = 1:d1
+    ii = 1:i+d2
+    uavg[i] = mean(view(u, ii))
+  end
+
+  # i = d1+1 => ii = 2:d+1
+  for i = d1+1:n-d2
+    ii = i-d1+1:i+d2
+    uavg[i] = mean(view(u, ii))
+  end
+
+  for i = n-d2+1:n
+    ii = n-d1+1:n
+    uavg[i] = mean(view(u, ii))
+  end
+
+  uavg
+end
+
+function movingavg!(u, d)
+  u = movingavg(u, d)
+  nothing
+end
+
+function coarsen(u, d)
   uavg = zeros(floor(Int, length(u)/d))
   i = j = 1
   i2(k) = k + d - 1
@@ -250,6 +309,30 @@ function vmplayeranalysis(vmp, sigmaedges)
   end 
 
   layersamples, layerkappa, layerepsilon, layerthickness
+end
+
+
+function getoverturns(profile; maxsigma=Inf)
+  z, ε, σ = unpack_vmp_profile(profile)
+  getoverturns(z, σ, maxsigma=maxsigma)
+end
+
+function getoverturns(z, σ; maxsigma=Inf)
+  # Limit to a maximum sigma
+  ii = σ .< maxsigma
+  z = z[ii]
+  σ = σ[ii]
+
+  σ_sorted, z_sorted = simulsort(σ, z; rev=true)
+
+  Δσ = @. abs(σ-σ_sorted)
+  Δz = @. abs(z-z_sorted)
+
+  # Remove non-overturns for which Δz = Δσ = 0
+  jj = Δz .> 0 
+  jj .*= .!isnan.(Δσ)
+
+  z[jj], σ[jj], Δz[jj], Δσ[jj]
 end
 
 end # module

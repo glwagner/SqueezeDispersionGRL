@@ -1,3 +1,10 @@
+function unpack_vmp_profile(profile)
+  z = -reverse(profile["depth"])
+  ε = reverse(profile["epsilon"])
+  σ = reverse(profile["sgth4"])
+  z, ε, σ
+end
+
 function unpacksection9(ctddata)
   idx = ctddata["section"] .== 9
   ignore = ((ctddata["cast"] .!= 49) .*  

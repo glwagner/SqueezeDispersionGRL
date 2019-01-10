@@ -28,11 +28,13 @@ Isolate the NaNs in the first array argument and remove corresponding
 elements in all arrays.
 """
 macro rmnans!(arrays...)
-  nans = isnan.(arrays[1])
   expr = Expr(:block)
+  append!(expr.args, :(nans = isnan.($(esc(arrays[1])))))
   append!(expr.args, [:( $(esc(a)) = $(esc(a))[.!nans]; ) for a in arrays])
   expr
 end
+
+rmnans(a) = a[.!isnan.(a)]
 
 function nan2missing(a)
   amiss = zeros(Union{Float64,Missing}, size(a))
@@ -87,6 +89,11 @@ function simulsort!(arrays...)
   nothing
 end
 
+function simulsort(arrays...; kwargs...)
+  ii = sortperm(arrays[1]; kwargs...)
+  (a[ii] for a in arrays)
+end
+
 function pressenter()
   println("Press enter to continue")
   readline(STDIN)
@@ -102,22 +109,19 @@ macro makeflat(arrays...)
   expr
 end
 
-
-
-
-
 "Calculate the distance between two points at (lat1, lon1) and (lat2, lon2)."
 function latlondist(lat1, lon1, lat2, lon2)
   # ref: https://andrew.hedges.name/experiments/haversine/
   R = 6.3178e6 # Earth radius
-  dlon = abs(lon1-lon2)
-  dlat = abs(lat1-lat2)
+  dlon = lon1-lon2
+  dlat = lat1-lat2
   a = sin(dlat/2)^2 + cos(lat1)*cos(lat2)*sin(dlon/2)^2
   c = 2*atan(sqrt(a), sqrt(1-a))
   R*c
 end
 
-latlondist(latlon1::Tuple, latlon2::Tuple) = latlondist(latlon1[1], latlon1[2], latlon2[1], latlon2[2])
+latlondist(latlon1::Tuple, latlon2::Tuple) = latlondist(latlon1[1], latlon1[2], 
+                                                        latlon2[1], latlon2[2])
 
 function closestctd(lon, lat, ctdlons, ctdlats)
   # ref: https://andrew.hedges.name/experiments/haversine/
@@ -158,7 +162,7 @@ function dz!(uz, u, z; rev=true)
 end
 
 function dz(u, z; kwargs...)
-  uz = zeros(length(u))
+  uz = similar(u)
   dz!(uz, u, z, kwargs...)
-  return uz
+  uz
 end

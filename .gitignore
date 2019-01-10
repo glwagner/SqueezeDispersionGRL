@@ -2,4 +2,4 @@ data/figure2_kap1e-4_nx0512_ny0512_delta[1-4]*.jld2
 data/figure2_kap1e-4_nx0512_ny0512_delta[6-8]*.jld2
 archive/
 *.swp
-
+*.DS_Store
