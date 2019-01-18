@@ -90,9 +90,9 @@ version = "0.1.0"
 
 [[DataStructures]]
 deps = ["InteractiveUtils", "OrderedCollections", "Random", "Serialization", "Test"]
-git-tree-sha1 = "8fc6e166e24fda04b2b648d4260cdad241788c54"
+git-tree-sha1 = "ca971f03e146cf144a9e2f2ce59674f5bf0e8038"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
-version = "0.14.0"
+version = "0.15.0"
 
 [[Dates]]
 deps = ["Printf"]
@@ -138,9 +138,9 @@ version = "0.3.0"
 
 [[HDF5]]
 deps = ["BinDeps", "Blosc", "CRC32c", "Distributed", "Homebrew", "Libdl", "LinearAlgebra", "Mmap", "Pkg", "Test", "WinRPM"]
-git-tree-sha1 = "2b55a7e957923fa15688c97e91198a3ff24155d2"
+git-tree-sha1 = "d1b46002defcf8be75ac75ce665b61b941082213"
 uuid = "f67ccb44-e63f-5c2f-98bd-6dc0ccc4ba2f"
-version = "0.10.3"
+version = "0.10.4"
 
 [[HTTPClient]]
 deps = ["Compat", "LibCURL"]
@@ -150,9 +150,9 @@ version = "0.2.1"
 
 [[Homebrew]]
 deps = ["BinDeps", "InteractiveUtils", "JSON", "Libdl", "Test", "Unicode"]
-git-tree-sha1 = "5582ec74f735cf8d12e562a2e65c47f34063bd51"
+git-tree-sha1 = "f01fb2f34675f9839d55ba7238bab63ebd2e531e"
 uuid = "d9be37ee-ecc9-5288-90f1-b9ca67657a75"
-version = "0.7.0"
+version = "0.7.1"
 
 [[InteractiveUtils]]
 deps = ["LinearAlgebra", "Markdown"]
@@ -263,8 +263,8 @@ uuid = "d96e819e-fc66-5662-9728-84c9c7592b0a"
 version = "0.10.3"
 
 [[PassiveTracerFlows]]
-deps = ["FFTW", "FourierFlows", "JLD2", "LinearAlgebra", "Printf", "PyPlot", "Random", "Requires", "Statistics", "Test"]
-git-tree-sha1 = "cb853780da8bbb396081441efa7b430178bc044b"
+deps = ["FFTW", "FourierFlows", "JLD2", "LinearAlgebra", "Printf", "PyPlot", "Random", "Reexport", "Statistics", "Test"]
+git-tree-sha1 = "f9db9484129f495ae645befb4e7bfd5e84b2ed00"
 repo-rev = "master"
 repo-url = "https://github.com/FourierFlows/PassiveTracerFlows.jl.git"
 uuid = "4daca97c-b6ab-11e8-166d-ff56bdb6ebb2"
@@ -317,12 +317,6 @@ deps = ["Pkg"]
 git-tree-sha1 = "7b1d07f411bc8ddb7977ec7f377b97b158514fe0"
 uuid = "189a3867-3050-52da-a836-e630ba90ab69"
 version = "0.2.0"
-
-[[Requires]]
-deps = ["Test"]
-git-tree-sha1 = "f6fbf4ba64d295e146e49e021207993b6b48c7d1"
-uuid = "ae029012-a4dd-5104-9daa-d747884805df"
-version = "0.5.2"
 
 [[SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
