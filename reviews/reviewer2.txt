@@ -1,0 +1,6 @@
+This well-written and clear paper presents a discussion of a new physical process: "squeeze dispersion", which may lead to substantial increases in diapycnal diffusivity due to diapycnal strain. 
+This is a very interesting insight, and the potential significance of this process is shown in the specific example of flow through the Samoan Passage. 
+This is just the sort of paper which should be published in GRL, and I strongly support acceptance. 
+My only significant comment is that I think the authors should expand their discussion somewhat of their reasoning (on line 200) for why "squeeze dispersion is not shear dispersion". 
+I agree that it is not, but a somewhat more detailed explanation would make the paper even more convincing. 
+I am confident that there will be significant interest in this paper in the future, and overall I find it very clear and well-argued.

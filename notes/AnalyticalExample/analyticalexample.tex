@@ -1,0 +1,298 @@
+\documentclass[11pt, oneside]{article}
+\usepackage[left=0.8in, right=0.8in, top=0.8in, bottom=0.9in, centering]{geometry}      
+\usepackage{float, epsfig, natbib, lineno, dblfnote, appendix}
+\usepackage{color, amssymb, amsmath, amsthm, verbatim, wasysym, mathrsfs}
+\usepackage[mathscr]{eucal}
+\usepackage{hyperref} \urlstyle{rm}
+\usepackage[font={footnotesize}]{caption}
+\raggedbottom
+
+\usepackage{scalerel, stackengine}
+\setstackEOL{\#}
+\stackMath
+\def\hatgap{2pt}
+\def\subdown{-2pt}
+\newcommand\reallywidehat[2][]{ \renewcommand\stackalignment{l} \stackon[\hatgap]{#2}{ \stretchto{
+    \scalerel*[\widthof{$#2$}]{\kern-.6pt\bigwedge\kern-.6pt}
+    {\rule[-\textheight/2]{1ex}{\textheight}}}
+    {0.5ex}_{\smash{ \belowbaseline[\subdown]{\scriptstyle#1} }}
+}}
+
+\newcommand{\com}		{\, ,}
+\newcommand{\per}		{\, .}
+\newcommand{\defn}	{\ensuremath{\stackrel{\mathrm{def}}{=}}}
+\newcommand{\av}[1]	{\bar{#1}}
+\newcommand{\avbg}[1]	{\overline{#1}}
+\newcommand{\beq}		{\begin{equation}}
+\newcommand{\eeq}		{\end{equation}}
+
+\newcommand{\mystrut}[1]{\vrule width0pt height0pt depth#1\relax}
+
+% Vector calculus 
+\newcommand{\p}		{\partial}
+\newcommand{\bnabla}	{\boldsymbol \nabla}
+\newcommand{\bcdot}	{\boldsymbol \cdot}
+\newcommand{\pnabla}	{\boldsymbol \nabla_{\! \! \perp}}
+\newcommand{\hnabla}	{\bnabla_{\! \! h}}
+\newcommand{\hlap}		{\triangle_h}
+\newcommand{\lap}		{\triangle}
+
+% Boldsymbols
+\newcommand{\bu}	{\boldsymbol u}
+\newcommand{\bx}	{\boldsymbol x}
+\newcommand{\bk}	{\boldsymbol{k}}
+\newcommand{\be}	{\boldsymbol{e}}
+\newcommand{\bU}	{\boldsymbol{U}}
+\newcommand{\bX}	{\boldsymbol{X}}
+\newcommand{\bF}	{\boldsymbol{F}}
+\newcommand{\bxh}	{\hspace{0.1em} \boldsymbol{\hat x}}
+\newcommand{\byh}	{\hspace{0.1em}\boldsymbol{\hat y}}
+\newcommand{\bzh}	{\hspace{0.1em}\boldsymbol{\hat z}}
+\newcommand{\bnh}	{\hspace{0.1em}\boldsymbol{\hat n}}
+\newcommand{\bkh}	{\hspace{0.1em}\boldsymbol{\hat k}}
+\newcommand{\bxi}	{\ensuremath {\boldsymbol {\xi}}}
+\newcommand{\bXi}	{\ensuremath {\boldsymbol {\Xi}}}
+\newcommand{\bomega}	{\boldsymbol \omega}
+
+% Greek
+\newcommand{\ep}{\epsilon}
+\newcommand{\om}{\omega}
+\newcommand{\kap}{\kappa}
+\newcommand{\gam}{\gamma}
+
+% Romans
+\newcommand{\ee}	{\mathrm{e}}
+\newcommand{\ii}	{\mathrm{i}}
+\newcommand{\cc}	{\mathrm{cc}}
+\newcommand{\dd}	{{\rm d}}
+\newcommand{\id}	{{\, \rm d}}
+
+% Misc
+\newcommand{\Dt}[1]	{\mathrm{D}_t #1}
+\newcommand{\half}		{\tfrac{1}{2}}
+\newcommand{\where}	{\qquad \text{where} \qquad}
+\newcommand{\aand}	{\qquad \text{and} \qquad}
+
+\begin{document}
+
+\title{ \vspace{-6ex}
+%
+Response to Trevor
+%
+\vspace{-0.6ex} }
+
+\author{Greg, Glenn, Raf} 
+
+\date{\today} 
+
+\vspace{-0.6ex} \maketitle \vspace{-4ex}
+
+\section{Trevor's points}
+
+Trevor makes 3 points:
+\begin{enumerate}
+\item Because the average flux with constant diffusivity is $\kappa \bar c_z$, squeeze dispersion cannot exist;
+\item Section 2 is wrong because diffusivity is calculated in height coordinates rather than isopycnal coordinates.
+\item the GM90 scheme is not a parameterization of the bolus velocity; ie, 
+\end{enumerate}
+
+\section{A simple example of squeeze dispersion}
+
+Consider a tracer squeezed and stretched by the two-dimensional incompressible flow
+\beq
+(u, w) = \left ( -x, z \right ) s_t(t) \com
+\eeq
+where $s(t) = w_z = -u_x$ is the amplitude of the linear strain field. 
+A tracer advected by this flow while diffusing with constant diffusivity $\kappa$ obeys
+\beq
+c_t -  s_t \left ( x c_x - z c_z \right ) = \kappa \left ( c_{xx} + c_{zz} \right ) \per
+\label{tracereqn}
+\eeq
+
+\subsection{Solution for an infinite tracer stripe}
+\newcommand{\tz}{\tilde z}
+\renewcommand{\tt}{\tilde t}
+
+If $c_x = 0$ initially, it remains so for all time, and \eqref{tracereqn} reduces to
+\beq
+c_t + s_t z c_z = \kap c_{zz} \per
+\label{1dtracereqn}
+\eeq
+This problem can be solved without too much trouble. With a change of coordinates to
+\beq
+Z =  \ee^{-s} z \com \quad T =  \int_0^t \ee^{-2s} \id t'
+\qquad \text{such that} \qquad 
+\p_z = \ee^{-s} \p_Z \com \quad \p_t = \ee^{-2s} \p_T - s_t Z \p_Z \com
+\eeq
+equation \eqref{1dtracereqn} transforms into
+\beq
+c_{T} = \kappa c_{ZZ} \per
+\eeq
+This equation can be solved for any initial condition. When $c(t=0) = \delta(z)$, we obtain the Gaussian-type solution,
+\beq
+c = \frac{1}{\sqrt{4 \pi \kappa T}} \exp \left [ - \frac{Z^2}{4 \kappa T} \right ] \per
+\label{gaussianlike}
+\eeq
+The second moment $\sigma = \int_{-\infty}^\infty z^2 c \id z$ is 
+\beq
+\sigma = 2 \kappa \ee^{2 s} \int_0^t \ee^{-2 s} \id t' \com
+\eeq
+in terms of which the solution becomes
+\beq
+c = \frac{1}{\sqrt{2 \pi \sigma}} \exp \left [ - \frac{z^2}{2 \sigma} \right ] \per
+\eeq
+
+\subsection{Analysis}
+
+We define the time-average of $c$ as
+\beq
+\langle c \rangle = \frac{1}{\tau} \int_0^\tau c \id t \com
+\eeq
+where $\tau$ is the period of $s_t$. In terms of $\sigma$, the effective diffusivity defined via
+\beq
+\kappa_e = \frac{\sigma(\tau)}{2 \tau}
+\eeq
+for an initially $\delta$-distributed $c$ becomes
+\beq
+\kappa_e = \kappa \langle \ee^{-2 s} \rangle \per
+\eeq
+when $s(0) = 0$.  An alternative definition of the effective diffusivity is $\kappa_e = \kappa + \kappa_{eddy}$ in terms of the `eddy' diffusivity
+\beq
+\kappa_{eddy} = \frac{\langle w c \rangle}{\langle c_z \rangle}
+\eeq
+Note that $c_z = - z c / \sigma$. With $w=s_t z$ the eddy diffusivity becomes
+\beq
+\kappa_{eddy} = - \frac{ \langle s_t \sigma^{-1/2} \ee^{-z^2/2 \sigma} \rangle}{\langle \sigma^{-3/2} \ee^{-z^2/2 \sigma} \rangle } \per
+\eeq
+Glenn argues that the the time-averages can be evaluated at $z=0$, so that 
+\beq
+\kappa_{eddy} =  \frac{ \langle s_t \sigma^{-1/2} \rangle}{\langle \sigma^{-3/2} \rangle} \per
+\label{finalkappeddy}
+\eeq
+We hope to find that $\kappa_{eddy} = \kappa_e - \kappa$. Our best shot at evaluating the averages in \eqref{finalkappeddy} is to choose an $s(t)$ for which we can evaluate $\sigma(t)$ analytically, I think.
+
+%Defining a `squeeze' diffusivity via the running average
+%\beq
+%\kappa_s = \frac{1}{t} \int_0^t \ee^{2 s} \kappa \id t' \com
+%\eeq
+%and using the definition $T = \int_0^t \ee^{2s} \id t'$, recalling that $\tt = t$, and that $Z = \tilde z = \ee^s z$, we write \eqref{gaussianlike} as
+%\beq
+%c = \frac{1}{\sqrt{4 \pi \kap_s t}} \exp \left [ - \frac{\ee^{2s} z^2}{4 \kap_s t} \right ] \per
+%\eeq
+%This solution (modulo a sign error) is identical to the solution found below for a $x$-averaged evolution of a compact tracer patch (because the $x$-integral is still valid for a tracer stripe).
+%
+%\subsection{Solution for compact tracer patches} 
+%
+%One approach to solving the $x$-averaged equation \eqref{xavgtracereqn} is to introduce the substitution $\mathcal{C} = \ee^{s} c$, where $s$ is the anti-derivative of $\dot s$.
+%The coordinate transforms $\zeta = \ee^s z$ and $\tau = \int_0^t \ee^s \id t'$ then lead to a solution for $C$.
+%
+%An alternate strategy is to use the `method of moments' to solve the full problem \eqref{tracereqn}.
+%Because the velocity field in \eqref{tracereqn} is linear in $z$, \eqref{tracereqn} is solved by 
+%\beq
+%c(x, z, t) = \frac{\exp \left ( -\frac{x^2}{2 \nu} - \frac{z^2}{2 \sigma} \right ) }{2 \pi \sqrt{\sigma \nu}} \com
+%\label{csoln}
+%\eeq
+%where $\nu$ and $\sigma$ are the second $x$- and $z$-moments defined via
+%\beq
+%\nu(t) \defn \int_{-\infty}^\infty x^2 c \id x \id z \com \aand \sigma(t) \defn \int_{-\infty}^\infty z^2 c \id x \id z \per
+%\eeq
+%Multiplying \eqref{tracereqn} by $x^2$ and $z^2$ yields evolution equations for $\nu$ and $\sigma$,
+%\beq
+%\nu_t + 2 \nu \dot s = 2 \kappa \com
+%\eeq
+%and
+%\beq
+%\sigma_t - 2 \sigma \dot s = 2 \kappa \per
+%\label{sigmaeqn}
+%\eeq
+%Equation \eqref{sigmaeqn} is easily solved to obtain $\sigma(t)$,
+%\beq
+%\sigma(t) - \sigma(0) = 2 \kappa \, \ee^{2 s} \int_0^t \ee^{-2 s} \id t' \com
+%\eeq
+%where $s$ is the integral of $\dot s$ such that $s(t) = \int_0^t \dot s \id t'$. 
+%A similar solution holds for $\nu(t)$.
+%
+%Finally, we note that the $x$-average of $c$ in \eqref{csoln} is
+%\beq
+%C = \frac{\ee^{-z^2 / 2 \sigma}}{\sqrt{2 \pi \sigma}} \per
+%\label{xavgsoln}
+%\eeq
+%Notice that if $s=0$ we find $\sigma = 2 \kappa t$ and obtain the usual solution $C = \ee^{- z^2 / 4 \kappa t }/ \sqrt{4 \pi \kappa t}$.
+%
+%\subsection{Solution for $\dot s = a \omega \cos \omega t$ and $\delta$-distributed $c(t=0)$}
+%
+%With $\dot s = a \omega \cos \omega t$, where $a$ is the non-dimensional amplitude of $\dot a$ and $\omega$ is the frequency, and the initial condition
+%\beq
+%c(t=0) = \delta(x) \delta(z) \com
+%\eeq
+%we have $\sigma(0) = 0$ and
+%\beq
+%\sigma(t) = 2 \kappa \, \ee^{2 a \sin \omega t} \int_0^t \ee^{-2 a \sin \omega t'} \id t' \per
+%\label{specialsigmasoln}
+%\eeq
+%Because 
+%\beq
+%\int_0^{2 \pi n / \omega} \ee^{-2 a \sin \omega t'} \id t' = \tfrac{2 \pi n}{\omega} I_0(2 a) \com
+%\eeq
+%where $I_0$ is the zeroth order modified Bessel function, \eqref{specialsigmasoln} can be evaluated at the discrete times $t_n = 2 \pi n / \omega$, at which
+%\beq
+%\sigma(t_n) = 2 \kappa I_0(2 a) t_n \per
+%\eeq
+%We thus write the solution \eqref{xavgsoln} after $n$ periods as
+%\beq
+%C(z, t_n) = \frac{1}{\sqrt{4 \kappa_e  t_n}} \exp \left [ - \frac{z^2}{4 \kappa_e t_n} \right ] \com \where \kappa_e \defn \kappa I_0(2a) \per
+%\label{specialxavgsoln}
+%\eeq
+%The quantity $\kappa_e$ is an `effective' diffusivity in the sense that $C(z, t_n)$ in \eqref{specialxavgsoln} is the usual solution to the diffusion equation 
+%\beq
+%C_T = \kappa_e C_{zz} \com
+%\eeq
+%with $C(T=0) = \delta(z)$, evaluated at $T=t_n$.
+%We have $\kappa_e > \kappa$ for any $a>0$; for small $a$ we find $\kappa_e \approx \kappa \left ( 1 + a^2 \right )$. 
+%$a > 1$ is generally unphysical, however we may still remark that or large $a$, $\kappa / \kappa_e$ increases exponentially.
+%
+%\subsection{Interpretation}
+%
+%Comparing the exact equation for $C$, 
+%\beq
+%C_t - \p_z \left ( \kappa C_z + a \omega \cos(\omega t) z C \right ) = 0 \com 
+%\eeq
+%and the averaged slow equation for $\bar C$, 
+%\beq
+%\bar C_T - \p_z \left ( \kappa_e \bar C_z \right ) = 0 \com
+%\eeq
+%suggests that we should have, in some sense, 
+%\beq
+%\kappa_e \bar C_z = \overline{ \kappa C_z + a \omega \cos(\omega t) z C} \per
+%\eeq
+%Since $\kappa_e = I_0(2a) \kappa$, we must find that
+%\beq
+%\overline{a \omega \cos(\omega t) z C} = \kappa \left [ I_0(2a) - 1 \right ] \bar C_z \per
+%\eeq
+%Can we show this directly? Should we? The function $I_0(2a)-1$ is an increasing function of $a$ and is 0 when $a=0$.
+
+%\subsubsection{Shenanigans} 
+%
+%Using $C_z = - z C / \sigma$ and the $\sigma$-equation, 
+%\beq
+%a \omega \cos (\omega t) \sigma = \half \sigma_t - \kappa \com
+%\eeq
+%we find that 
+%\beq
+%\kappa C_z + a \omega \cos(\omega t) z C = - \half \sigma_t C_z \per
+%\eeq
+
+
+%\begin{figure}[htp!]
+%\centering
+%\includegraphics[width = 1\textwidth]{test}
+%\caption{A figure}
+%\label{fig}
+%\end{figure}
+
+%\appendix
+
+\bibliographystyle{jfm}
+\bibliography{refs}
+
+\end{document}
