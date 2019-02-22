@@ -26,7 +26,7 @@ produce the top and bottom of figure 3.
 
 The code in this repository was written by [Gregory L. Wagner](). The Samoan Passage observational data 
 was trimmed from a larger CTD and microstructure dataset provided by [Glenn S. Carter]() and [Gunnar Voet]().
-The observational data was taken on a research cruise in 2012 with [Matthew H. Alford](), [James B. Girton](), 
+The observational data was collected during a research cruise in 2012 by [Matthew H. Alford](), [James B. Girton](), 
 [Glenn S. Carter](), and [Gunnar Voet]().
 
 
