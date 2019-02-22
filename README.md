@@ -19,7 +19,7 @@ A script to reproduce the simulation data is provided in `scripts/example.jl`.
 ## Notebooks to produce plots
 
 Jupyter notebooks to produce plots for the paper are provided in `notebooks/`.
-The notebook `example.ipynb` produces figure 2. The notebooks `samoanoverview.ipynb` and `samoanresults.ipynb`
+The notebook `example.ipynb` produces figure 2. The notebooks `samoanoverview.ipynb` and `analysis.ipynb`
 produce the top and bottom of figure 3. 
 
 ## Contributors
