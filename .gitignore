@@ -4,3 +4,4 @@ archive/
 *.swp
 *.DS_Store
 *.dropbox.attr
+*.ipynb_checkpoints/
